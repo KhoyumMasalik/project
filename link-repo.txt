@@ -1,0 +1,5 @@
+LINK : 
+Kasir = http://kasir-khoyum.rf.gd/
+Bahan Bakar = http://bahan-bakar-khoyum.rf.gd/
+Rental Motor = http://rental-motor-khoyum.rf.gd/
+Data Siswa = http://data-siswa-khoyumm.rf.gd/

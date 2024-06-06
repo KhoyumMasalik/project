@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bahan Bakar</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #ffcccc, #ff99cc);
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 20px;
+            background: rgba(255, 204, 204, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 40px rgba(255, 153, 153, 0.5);
+            padding: 40px;
+        }
+
+        label,
+        form label {
+            font-weight: bold;
+            color: #880000;
+            display: block;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .output button,
+        button[type="submit"] {
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #dd9999;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 18px;
+            padding: 10px;
+            background-color: #ff99cc;
+            color: #880000;
+        }
+
+        button[type="submit"],
+        .output button {
+            background-color: #ff3399;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 12px 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover,
+        .output button:hover {
+            background-color: #ff0066;
+        }
+
+        button[name="printt"] {
+            background-color: #0056b3;
+        }
+
+        button[name="printt"]:hover {
+            background-color: #003c80;
+        }
+
+        .output {
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            button[type="submit"],
+            .output button {
+                font-size: 16px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <?php if (!isset($_POST['beli']) && !isset($_POST['bayar'])) : ?>
+            <div class="form-card">
+                <h1 class="text-center">Shell Bahan Bakar</h1>
+                <form action="" method="POST">
+                    <div class="form-group">
+                        <label for="jenis">Pilih Jenis Bahan Bakar</label>
+                        <select class="form-control" name="jenis" id="jenis" required>
+                            <option value="default" selected disabled>Pilih jenis Bahan Bakar</option>
+                            <option value="SSuper">Shell Super - Rp. 10.000/liter</option>
+                            <option value="SVPower">Shell V-Power - Rp. 15.000/liter</option>
+                            <option value="SVPowerDiesel">Shell V-Power Diesel - Rp. 18.000/liter</option>
+                            <option value="SVPowerNitro">Shell V-Power Nitro - Rp. 20.000/liter</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="liter">Masukan jumlah Liter pembelian</label>
+                        <input type="number" class="form-control" name="liter" id="liter" min="1" placeholder="Minimal 1 liter" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary" name="beli">Beli</button>
+                    </div>
+                </form>
+            </div>
+        <?php endif; ?>
+
+        <?php
+        class DataBahanBakar
+        {
+            private $hargaSSuper, $hargaSVPower, $hargaSVPowerDiesel, $hargaSVPowerNitro;
+
+            public function setHarga($valSSuper, $valSVPower, $valSVPowerDiesel, $valSVPowerNitro)
+            {
+                $this->hargaSSuper = $valSSuper;
+                $this->hargaSVPower = $valSVPower;
+                $this->hargaSVPowerDiesel = $valSVPowerDiesel;
+                $this->hargaSVPowerNitro = $valSVPowerNitro;
+            }
+
+            public function getHarga()
+            {
+                return [
+                    "SSuper" => $this->hargaSSuper,
+                    "SVPower" => $this->hargaSVPower,
+                    "SVPowerDiesel" => $this->hargaSVPowerDiesel,
+                    "SVPowerNitro" => $this->hargaSVPowerNitro
+                ];
+            }
+        }
+
+        class Pembelian extends DataBahanBakar
+        {
+            public $jenisYangDiPilih;
+            public $totalLiter;
+            protected $totalPembayaran;
+
+            public function totalHarga()
+            {
+                $this->totalPembayaran = $this->getHarga()[$this->jenisYangDiPilih] * $this->totalLiter;
+            }
+
+            public function cetakBukti()
+            {
+                echo "<div class='output'>";
+                echo "<h4><strong>Terima kasih telah melakukan pembelian!</strong></h4>";
+                echo "<div><strong>Jenis Bahan Bakar yang Anda Beli:</strong> " . $this->jenisYangDiPilih . "</div>";
+                echo "<div><strong>Total Liter yang Anda Beli:</strong> " . $this->totalLiter . "</div>";
+                echo "<div><strong>Total Harga yang Anda Bayarkan:</strong> Rp. " . number_format($this->totalPembayaran) . "</div>";
+                echo '<form action="" method="POST">';
+                echo '<div class="form-group">';
+                echo '<label for="metode">Pilih Metode Pembayaran</label>';
+                echo '<select class="form-control" name="metode" id="metode" required>';
+                echo '<option value="default" selected disabled>Pilih Metode Pembayaran:</option>';
+                echo '<option value="cash">Cash</option>';
+                echo '<option value="debit">Debit</option>';
+                echo '</select>';
+                echo '</div>';
+                echo '<div class="form-group">';
+                echo '<input type="hidden" name="jenis" value="' . $this->jenisYangDiPilih . '">';
+                echo '<input type="hidden" name="liter" value="' . $this->totalLiter . '">';
+                echo '<label for="uangDibayar">Masukkan jumlah uang yang akan Anda bayarkan</label>';
+                echo '<input type="number" class="form-control" name="uangDibayar" id="uangDibayar" min="' . $this->totalPembayaran . '" required>';
+                echo '</div>';
+                echo '<div>';
+                echo '<button type="submit" class="btn btn-primary" name="bayar">Bayar</button>';
+                echo '</div>';
+                echo '</form>';
+                echo "</div>";
+            }
+        }
+
+        $logic = new Pembelian();
+        $logic->setHarga(10000, 15000, 18000, 20000);
+
+        if (isset($_POST['beli'])) {
+            $logic->jenisYangDiPilih = $_POST['jenis'];
+            $logic->totalLiter = $_POST['liter'];
+            $logic->totalHarga();
+            $logic->cetakBukti();
+        } elseif (isset($_POST['bayar'])) {
+            $jenis = isset($_POST['jenis']) ? $_POST['jenis'] : null;
+            $liter = isset($_POST['liter']) ? $_POST['liter'] : null;
+            $metode = isset($_POST['metode']) ? $_POST['metode'] : null;
+            $uangDibayar = isset($_POST['uangDibayar']) ? $_POST['uangDibayar'] : null;
+
+            if ($jenis && $liter && $metode && $uangDibayar) {
+                $harga = [
+                    "SSuper" => 10000,
+                    "SVPower" => 15000,
+                    "SVPowerDiesel" => 18000,
+                    "SVPowerNitro" => 20000
+                ];
+                $totalBayar = $harga[$jenis] * $liter;
+                $kembalian = $uangDibayar - $totalBayar;
+
+                echo "<div class='output'>";
+                echo "<h4><strong>Terima kasih telah melakukan pembelian!</strong></h4>";
+                echo "<div><strong>Jenis Bahan Bakar yang Anda Beli: <b>" . $jenis . "</b></strong> </div>";
+                echo "<div><strong>Total Liter yang Anda Beli:<b> " . $liter . "</b></strong></div>";
+                echo "<div><strong>Total Harga yang Anda Bayarkan: Rp. <b>" . number_format($totalBayar) . "</b></strong></div>";
+                echo "<div><strong>Metode Pembayaran: <b>" . $metode . "</b></strong></div>";
+                echo "<div><strong>Uang yang Dibayarkan: Rp. <b>" . number_format($uangDibayar) . "</b></strong></div>";
+                echo "<div><strong>Kembalian: Rp. <b>" . number_format($kembalian) . "</b></strong></div>";
+                echo '<form action="" method="POST">';
+                echo '<div class="text-center" style="margin-top: 20px;">';
+                echo '<button type="button" name="printt" class="btn btn-lg btn-primary" onclick="window.print()">Print</button>';
+                echo '</div>';
+                echo '<div>';
+                echo '<button type="submit" class="btn btn-primary" name="selesai">Kembali</button>';
+                echo '</div>';
+                echo '</form>';
+                echo "</div>";
+            }
+        }
+        ?>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
