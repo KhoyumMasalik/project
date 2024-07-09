@@ -29,9 +29,11 @@ if (isset($_GET['delete'])) {
 }
 
 if (isset($_GET['hapus_semua'])) {
-    $students = [];
-    $_SESSION['students'] = $students;
+    $students = []; // Mengosongkan array students
+    $_SESSION['students'] = $students; // Menyimpan perubahan ke session
 }
+
+if (isset($_))
 
 ?>
 <!DOCTYPE html>
@@ -44,7 +46,7 @@ if (isset($_GET['hapus_semua'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body {
-            background-color: #fce4ec;
+            background-color: #ffe4e1;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -55,13 +57,10 @@ if (isset($_GET['hapus_semua'])) {
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
         }
 
         .form-card {
-            background-color: #f8bbd0;
+            background-color: #fff0f5;
             backdrop-filter: blur(10px);
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -71,18 +70,32 @@ if (isset($_GET['hapus_semua'])) {
 
         .form-card h2 {
             margin-bottom: 20px;
-            color: #e91e63;
+            color: #c71585;
         }
 
         .form-card form label {
             font-weight: bold;
-            color: #e91e63;
+            color: #c71585;
         }
 
-        .form-card form button[type="submit"],
-        .form-card a,
+        .form-card form button[type="submit"] {
+            background-color: #ff69b4;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-card a {
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
         .form-card form .print {
-            background-color: #e91e63;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -108,11 +121,11 @@ if (isset($_GET['hapus_semua'])) {
         }
 
         .student-table th {
-            background-color: #e91e63;
+            background-color: #ffc0cb;
         }
 
         .student-table tr:nth-child(even) {
-            background-color: #f8bbd0;
+            background-color: #ffe4e1;
         }
 
         .student-table tr:hover {
@@ -126,32 +139,6 @@ if (isset($_GET['hapus_semua'])) {
 
         .student-table a:hover {
             color: #ff1493;
-        }
-
-        @media (max-width: 600px) {
-            .form-card h2 {
-                font-size: 1.6rem;
-            }
-
-            .form-card form label {
-                font-size: 0.9rem;
-            }
-
-            .form-card form button[type="submit"],
-            .form-card a,
-            .form-card form .print {
-                font-size: 0.9rem;
-                padding: 8px 16px;
-            }
-
-            .student-table th {
-                font-size: 0.9rem;
-                padding: 6px;
-            }
-
-            .student-table td {
-                font-size: 0.8rem;
-            }
         }
     </style>
 </head>

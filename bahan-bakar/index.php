@@ -9,8 +9,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --second-bg-color: #2c2c2c;
+            --text-color: #ffffff;
+            --main-color: #ff7f00;
+            --hover-color: #e66a00;
+        }
+
         body {
-            background: linear-gradient(to right, #ffcccc, #ff99cc);
+            background-color: var(--bg-color);
+            color: var(--text-color);
             font-family: 'Roboto', sans-serif;
             display: flex;
             justify-content: center;
@@ -22,16 +31,16 @@
         .container {
             max-width: 700px;
             margin: 20px;
-            background: rgba(255, 204, 204, 0.9);
+            background-color: var(--second-bg-color);
             border-radius: 15px;
-            box-shadow: 0 0 40px rgba(255, 153, 153, 0.5);
+            box-shadow: 0 0 40px var(--main-color);
             padding: 40px;
         }
 
         label,
         form label {
             font-weight: bold;
-            color: #880000;
+            color: var(--main-color);
             display: block;
             text-align: center;
             margin-bottom: 10px;
@@ -41,19 +50,19 @@
         button[type="submit"] {
             width: 100%;
             margin-bottom: 20px;
-            border: 1px solid #dd9999;
+            border: 5px solid var(--main-color);
             border-radius: 10px;
             box-sizing: border-box;
             font-size: 18px;
             padding: 10px;
-            background-color: #ff99cc;
-            color: #880000;
+            background-color: var(--main-color);
+            color: var(--text-color);
         }
 
         button[type="submit"],
         .output button {
-            background-color: #ff3399;
-            color: #ffffff;
+            background-color: var(--main-color);
+            color: var(--text-color);
             border: none;
             border-radius: 10px;
             cursor: pointer;
@@ -64,7 +73,7 @@
 
         button[type="submit"]:hover,
         .output button:hover {
-            background-color: #ff0066;
+            background-color: var(--hover-color);
         }
 
         button[name="printt"] {
@@ -97,7 +106,7 @@
     <div class="container">
         <?php if (!isset($_POST['beli']) && !isset($_POST['bayar'])) : ?>
             <div class="form-card">
-                <h1 class="text-center">Shell Bahan Bakar</h1>
+                <h1 class="text-center">Form Bahan Bakar</h1>
                 <form action="" method="POST">
                     <div class="form-group">
                         <label for="jenis">Pilih Jenis Bahan Bakar</label>

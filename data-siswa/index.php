@@ -29,11 +29,9 @@ if (isset($_GET['delete'])) {
 }
 
 if (isset($_GET['hapus_semua'])) {
-    $students = []; // Mengosongkan array students
-    $_SESSION['students'] = $students; // Menyimpan perubahan ke session
+    $students = [];
+    $_SESSION['students'] = $students;
 }
-
-if (isset($_))
 
 ?>
 <!DOCTYPE html>
@@ -42,69 +40,76 @@ if (isset($_))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Isi Data Siswa</title>
+    <title>Data Siswa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --second-bg-color: #2c2c2c;
+            --text-color: #ffffff;
+            --main-color: #ff7f00;
+            --hover-color: #e66a00;
+            --gold-color: #ffd700;
+        }
+
         body {
-            background-color: #ffe4e1;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            background: linear-gradient(to right, #1a1a1a, #2c2c2c);
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
+            background-color: var(--second-bg-color);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 127, 0, 0.7);
+            border: 1px solid var(--main-color);
         }
 
         .form-card {
-            background-color: #fff0f5;
-            backdrop-filter: blur(10px);
+            background-color: var(--second-bg-color);
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px var(--main-color);
             padding: 20px;
             margin-bottom: 20px;
         }
 
         .form-card h2 {
             margin-bottom: 20px;
-            color: #c71585;
+            color: var(--main-color);
+            font-family: 'Playfair Display', serif;
         }
 
         .form-card form label {
             font-weight: bold;
-            color: #c71585;
+            color: var(--main-color);
         }
 
-        .form-card form button[type="submit"] {
-            background-color: #ff69b4;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .form-card a {
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
+        .form-card form button[type="submit"],
+        .form-card a,
         .form-card form .print {
-            color: #fff;
+            background-color: var(--main-color);
+            color: var(--text-color);
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 127, 0, 0.3);
         }
 
-        .form-card form button[type="submit"]:hover {
-            background-color: #ff1493;
+        .form-card form button[type="submit"]:hover,
+        .form-card a:hover,
+        .form-card form .print:hover {
+            background-color: var(--hover-color);
+            box-shadow: 0 8px 20px rgba(255, 102, 0, 0.4);
         }
 
         .student-table {
@@ -115,38 +120,69 @@ if (isset($_))
 
         .student-table th,
         .student-table td {
-            border: 1px solid #ddd;
+            border: 1px solid var(--main-color);
             padding: 8px;
             text-align: left;
+            color: var(--text-color);
         }
 
         .student-table th {
-            background-color: #ffc0cb;
+            background-color: var(--main-color);
+            font-family: 'Playfair Display', serif;
+            color: var(--gold-color);
         }
 
         .student-table tr:nth-child(even) {
-            background-color: #ffe4e1;
+            background-color: var(--second-bg-color);
         }
 
         .student-table tr:hover {
-            background-color: #ffb6c1;
+            background-color: var(--hover-color);
         }
 
         .student-table a {
-            color: #c71585;
+            color: var(--main-color);
             text-decoration: none;
+            transition: color 0.3s ease;
         }
 
         .student-table a:hover {
-            color: #ff1493;
+            color: var(--hover-color);
+        }
+
+        @media (max-width: 600px) {
+            .form-card h2 {
+                font-size: 1.6rem;
+            }
+
+            .form-card form label {
+                font-size: 0.9rem;
+            }
+
+            .form-card form button[type="submit"],
+            .form-card a,
+            .form-card form .print {
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
+
+            .student-table th {
+                font-size: 0.9rem;
+                padding: 6px;
+            }
+
+            .student-table td {
+                font-size: 0.8rem;
+            }
         }
     </style>
+
 </head>
 
 <body>
     <div class="container">
         <div class="form-card">
-            <h2 class="text-center">Form Isi Data Siswa</h2>
+            <h2 class="text-center fw-bold">Form Isi Data Siswa</h2>
             <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                 <div class="row mb-3">
                     <div class="col">
@@ -221,14 +257,13 @@ if (isset($_))
                 <div class="text-center">
                     <button type="submit" name="submit" class="btn btn-primary">Kirim</button>
                     <a href="<?php echo $_SERVER['PHP_SELF'] . '?hapus_semua=1'; ?>" class="btn btn-danger">Hapus</a>
-                    <button onclick="window.print()" class="btn btn-success print">Cetak</button>
+                    <button type="button" onclick="window.print()" class="btn btn-success print">Cetak</button>
                 </div>
-
             </form>
         </div>
 
         <?php if (!empty($students)) : ?>
-            <h2 style="text-align: center; color: #333;">Data Siswa:</h2>
+            <h2 class="text-center" style="color: var(--main-color);">Data Siswa:</h2>
             <table class="student-table">
                 <thead>
                     <tr>

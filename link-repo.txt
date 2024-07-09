@@ -3,3 +3,9 @@ Kasir = http://kasir-khoyum.rf.gd/
 Bahan Bakar = http://bahan-bakar-khoyum.rf.gd/
 Rental Motor = http://rental-motor-khoyum.rf.gd/
 Data Siswa = http://data-siswa-khoyumm.rf.gd/
+
+
+    --bg-color: #1a1a1a;
+    --second-bg-color: #2c2c2c;
+    --text-color: #ffffff;
+    --main-color: #ff7f00;
